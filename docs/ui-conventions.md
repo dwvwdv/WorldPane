@@ -81,7 +81,7 @@ JS 需要顏色時也一樣：字串寫成 `var(--look-xiaobai)`、`var(--home)`
 
 ## Brutalism 結構
 
-- **偏移陰影**：`box-shadow: var(--offset) var(--offset) 0 var(--shadow)`（frost3 實色，`--offset` 3px）。一般按鈕的陰影色同邊框（`--shadow-ghost`）、危險按鈕用紅；按下時元素位移 `--offset` 落進自己的陰影、陰影歸零（90ms）
+- **偏移陰影**：`box-shadow: var(--offset) var(--offset) 0 var(--shadow)`（frost3 實色，`--offset` 3px）。一般按鈕的陰影色同裝飾性結構邊框 `--line`（`--shadow-ghost`，即設計系統的 `offset-shadow-ghost`；陰影是裝飾，可按的辨識靠 `--line-control` 外框）、危險按鈕用紅；按下時元素位移 `--offset` 落進自己的陰影、陰影歸零（90ms）
 - **偏移會溢出元素外框** ⚠️：放面板的 grid 要留 ≥12px 的 gap，容器右下要留出 `--offset` 的 padding（`.wall`、`.detail`、`/demo` 的 section 都有），否則陰影被相鄰元素或捲動容器截掉
 - **2px 裸邊框**：面板是 2px `--line`；按鈕、chip、分頁群組與頁面自訂的按鈕（World 清單、Demo 日期）用 `--line-control`；輸入框左側是 4px frost1 accent bar，focus 換成 `--accent`；選中的清單項目加 4px 左側 accent bar
 - **直角**：`--radius` 0（Offbeat 的 Web 介面在所有 STRUCTURE 下都是直角，圓角 4px 只屬於行動 App）；只有裝置畫面裡模擬螢幕的窗與徽章保留 2px

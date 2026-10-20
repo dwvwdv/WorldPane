@@ -36,7 +36,7 @@ header.top { display: flex; flex-wrap: wrap; align-items: center; justify-conten
 .tile-head .clock { font-family: var(--font-mono); font-size: 1rem; color: var(--accent); font-variant-numeric: tabular-nums; flex: none; }
 .tile-foot { display: flex; justify-content: space-between; align-items: center; gap: 8px; color: var(--muted); font-family: var(--font-mono); font-size: .72rem; padding: 0 4px; flex-wrap: wrap; }
 .tile-foot .acts { display: flex; gap: 6px; }
-.tile-foot button { background: transparent; border: 2px solid var(--line-control); color: var(--ink); border-radius: var(--radius); padding: 0 8px; font: inherit; cursor: pointer; }
+.tile-foot button { background: transparent; border: 2px solid var(--line-control); color: var(--ink); border-radius: var(--radius); padding: 0 8px; font: inherit; font-weight: 700; cursor: pointer; }
 .tile-foot button:hover { border-color: var(--accent); color: var(--accent); }
 .tile.stale .tile-head .clock { color: var(--warn-ink); }
 .screens { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; align-content: start; }
@@ -69,10 +69,10 @@ header.top { display: flex; flex-wrap: wrap; align-items: center; justify-conten
 .manage { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 18px; align-items: start; }
 @media (max-width: 860px) { .manage { grid-template-columns: 1fr; } }
 .wlist { display: grid; gap: 6px; }
-.wlist button { text-align: left; border: 2px solid var(--line-control); background: var(--panel); color: var(--ink); border-radius: var(--radius); padding: 8px 10px; font: inherit; cursor: pointer; display: grid; gap: 1px; }
+.wlist button { text-align: left; border: 2px solid var(--line-control); background: var(--panel); color: var(--ink); border-radius: var(--radius); padding: 8px 10px; font: inherit; font-weight: 700; cursor: pointer; display: grid; gap: 1px; }
 .wlist button:hover { border-color: var(--accent); }
 .wlist button[aria-current="true"] { border-color: var(--accent); border-left-width: 4px; background: var(--panel-head); color: var(--ink-strong); }
-.wlist .meta { font-family: var(--font-mono); font-size: .72rem; color: var(--muted); }
+.wlist .meta { font-family: var(--font-mono); font-size: .72rem; font-weight: 400; color: var(--muted); }
 .detail { display: grid; gap: 18px; min-width: 0; padding: 0 var(--offset) var(--offset) 0; }
 .kv { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 4px 14px; font-size: .88rem; }
 .kv dt { color: var(--muted); }

@@ -7,6 +7,14 @@
 
 ## 最近版本
 
+### server 0.1.2 (2026-10-20)
+- 🎨 **`offbeat.css` 對齊 Offbeat 設計系統 tokens v1**（五個專案這一輪統一成同一組值）：Web 介面改為直角（`--radius` 0）、偏移陰影改為 frost3 實色並收到 `offset-sm` 3px、dialog 遮罩改為黑 55%
+- 🎨 **主按鈕改為 frost1 底配 polar0 字**（6.24:1）：原本 frost3 底配 snow 字只有 3.50:1。選中的分頁改為 polar2 底 + accent 字 + 4px 底線，不再把字放在 frost3 填色上
+- 🎨 **文字改用三層底色都 ≥ 4.5:1 的 ink**：`--muted` 由舊 dim `#9AA0AD`（面板上 3.84:1）改為 `#B8BDC8`、`--accent` 改為 `#93C6D4`；新增 `--ok-ink`／`--warn-ink`／`--danger-ink`，`.err` 與 `.pill.on`、過期時鐘改用它們
+- 🎨 危險按鈕改為加深紅底（`#A54049`，hover `#8F3A42`）配 snow2 字；按鈕、chip、分頁群組，以及頁面自訂的 World 清單與 Demo 日期按鈕，外框都改用 `--line-control`（`#919BB1`，polar0／1／2 三層都 ≥ 3:1）；按鈕（含頁面自訂的 World 清單、Demo 日期、圖塊底部按鈕）與帶字距的表頭字重 700
+- 🎨 字族改為拉丁字型在前、CJK 在後，並移除 Google Fonts（Offbeat 不載入 webfont）
+- ⚡ `test_theme.py`：色碼白名單加入設計系統的衍生值、遮罩是唯一允許的黑色半透明，另擋下半透明陰影與非 0 的 `--radius`
+
 ### server 0.1.1 (2026-10-07)
 - 🎨 **`/dashboard` 與 `/demo` 改用 Offbeat 設計語言**（Nord × Brutalism，與無感記帳 App 的 Offbeat 主題同一套）：polar0 深色底、2px 裸邊框、frost3 偏移陰影塊、4px 低圓角；字型改為 Noto Sans TC + JetBrains Mono，移除楷體與 IBM Plex Mono
 - 🎨 **網頁顏色集中到 `static/offbeat.css`**：Nord 色碼只寫在這個檔案，頁面與 JS 只用語意 token（`--panel`、`--muted`、`--home`、`--sky-day`、`--look-1`…），由 `theme.py` 在送出前內嵌，離線的 demo 檔照樣完整。時間軸、圖例與裝置畫面的地板改用同一組場景類別色

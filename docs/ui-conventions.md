@@ -6,12 +6,13 @@
 ## 風格
 
 **Offbeat** 是 lazyrhythm 的個人設計語言（與「無感記帳」App 的 Offbeat 主題同一套）：**Nord × Brutalism**。
-冷靜的北歐苔原色票（Nord Palette）＋ 刻意的結構暴力感（偏移陰影、2px 裸邊框、低圓角）——有稜角但不刺眼，有個性但不吵鬧。
+冷靜的北歐苔原色票（Nord Palette）＋ 刻意的結構暴力感（偏移陰影、2px 裸邊框、直角）——有稜角但不刺眼，有個性但不吵鬧。
+色值與規則以 lazyrhythm 的 **Offbeat 設計系統（tokens v1）** 為唯一標準，與 Driftread、Lazyrhythm、LazyEmbed、無感記帳共用；本檔只記 WorldPane 怎麼套用它。
 
 命名來源：偏移陰影（**off**set）＋ 反拍節奏（**offbeat**）——結構刻意錯開，落點不在正拍上。
 
 WorldPane 的網頁是工具型介面（監視牆、管理表單、回放控制），旋鈕設在 `STRUCTURE_WEIGHT 6 / MOTION_INTENSITY 3`：
-圓角 4px（裝置畫面裡的窗 2px）、偏移 4px、幾乎不做動畫（只有角色呼吸與按鈕按下的位移，且尊重 `prefers-reduced-motion`）。
+直角（Web 一律 `--radius: 0`；裝置畫面裡的窗是模擬螢幕內容，維持 2px）、偏移 `offset-sm` 3px、幾乎不做動畫（只有角色呼吸與按鈕按下的位移，且尊重 `prefers-reduced-motion`）。
 
 ## 檔案與內嵌方式
 
@@ -26,35 +27,42 @@ WorldPane 的網頁是工具型介面（監視牆、管理表單、回放控制�
 
 | 層 | 例子 | 誰可以用 |
 |----|------|----------|
-| Nord 色票 | `--nord-polar0`、`--nord-frost1`、`--nord-red` | **只有 `offbeat.css` 自己** |
-| 語意 token | `--bg`、`--panel`、`--line`、`--ink`、`--muted`、`--accent`、`--primary`、`--ok`、`--warn`、`--danger`、`--home`、`--sky-day`、`--look-1` | 頁面 CSS 與 JS |
+| Nord 色票與衍生值 | `--nord-polar0`、`--nord-frost1`、`--nord-red`、`--nord-dim-ink`、`--nord-red-ink-dark` | **只有 `offbeat.css` 自己** |
+| 語意 token | `--bg`、`--panel`、`--line`、`--line-control`、`--ink`、`--muted`、`--accent`、`--accent-fill`、`--ok`／`--ok-ink`、`--warn`／`--warn-ink`、`--danger`／`--danger-ink`、`--home`、`--sky-day`、`--look-1` | 頁面 CSS 與 JS |
 
 **頁面不寫色碼、也不直接引用 `--nord-*`** ⚠️：頁面以「這是面板的底」「這是次要文字」「這是危險操作」表達意圖，由 `offbeat.css` 決定它是哪個顏色。
 要調整外觀（甚至日後換一套色票）只改 `offbeat.css` 的對應，兩個頁面零改動——與無感記帳「頁面不判斷主題身分、只讀主題提供的能力」同一個原則。
 JS 需要顏色時也一樣：字串寫成 `var(--look-xiaobai)`、`var(--home)`，或設 `data-sky="day"` 讓 CSS 對應，不寫 `#xxxxxx`。
 
-`worldpane-server/tests/test_theme.py` 擋下頁面（HTML、CSS、JS）裡的 hex／`rgb()` 色碼，並檢查 `offbeat.css` 的每一個色碼都來自 Nord 色票。
+`worldpane-server/tests/test_theme.py` 擋下頁面（HTML、CSS、JS）裡的 hex／`rgb()` 色碼，並檢查 `offbeat.css` 的每一個色碼都來自 Nord 色票或設計系統的衍生值、偏移陰影都是實色、`--radius` 是 0。
 
 ## 用色規則
 
-| 用途 | token | 色票 |
+**對比原則**：Nord 原色負責「被看見」（填色、邊框、圓點、左邊條、偏移陰影），`*-ink` 負責「被讀懂」（文字）。
+每個文字 token 在 polar0／polar1／polar2 三層上都 ≥ 4.5:1，字放在面板、標題欄或頁面底上都不必再判斷。
+
+| 用途 | token | 色值 |
 |------|-------|------|
 | 頁面底 | `--bg` | polar0 `#2E3440`（永遠最深，不用純黑） |
 | 面板、卡片、裝置外框 | `--panel`、`--bezel` | polar1 `#3B4252` |
-| 標題欄、選中的列 | `--panel-head` | polar2 `#434C5E` |
+| 標題欄、hover、選中的列與分頁 | `--panel-head` | polar2 `#434C5E` |
 | 面板裡的輸入框 | `--field` | polar0（比面板深一階才分得出來） |
-| 邊框、分隔線 | `--line` | polar3 `#4C566A` |
+| 結構邊框、分隔線（裝飾性） | `--line` | polar3 `#4C566A` |
+| 控制項外框（按鈕、chip、checkbox） | `--line-control` | `#919BB1`（polar0／1／2 三層都 ≥ 3:1，按鈕放在標題欄上也看得清） |
 | 主要文字／標題／最亮 | `--ink`／`--ink-strong`／`--ink-bright` | snow0／snow1／snow2 |
-| 次要文字、placeholder | `--muted` | dim `#9AA0AD` |
-| 強調、連結、focus、時鐘 | `--accent` | frost1 `#88C0D0` |
-| 主要按鈕底、選中的分頁 | `--primary` | frost3 `#5E81AC` |
-| 成功／警告／危險／資訊／注意 | `--ok`／`--warn`／`--danger`／`--info`／`--notice` | Aurora green／orange／red、frost2、Aurora yellow |
+| 次要文字、placeholder、表頭 | `--muted` | dim-ink `#B8BDC8`（6.63／5.34／4.58） |
+| 強調文字、連結、時鐘、focus | `--accent` | frost-ink `#93C6D4`（6.70／5.40／4.63） |
+| 主按鈕底、checkbox、選中分頁的底線 | `--accent-fill` + 字 `--accent-ink` | frost1 `#88C0D0` + polar0（6.24:1） |
+| 危險按鈕 | `--danger-fill`／`--danger-fill-hover` + snow2 字 | `#A54049`（5.31:1）／`#8F3A42`（6.39:1） |
+| 成功／警告／危險（標記） | `--ok`／`--warn`／`--danger` | Aurora green／orange／red |
+| 成功／警告／危險（文字） | `--ok-ink`／`--warn-ink`／`--danger-ink` | `#B0CB98`／`#F3AE95`／`#F4ABB2` |
+| 資訊／注意 | `--info`／`--notice` | frost2、Aurora yellow（黃在三層上都 ≥ 5.5:1，可直接當字） |
 
-- **次要文字用 dim `#9AA0AD`，絕不用 polar3** ⚠️：polar3 疊在 polar0／polar1 上對比只有 2.3:1（未達 WCAG AA 4.5:1），只適合邊框與分隔線
-- **Aurora 只作語意點綴，不作大面積背景**：危險按鈕是一般按鈕＋紅色邊框＋紅色偏移塊，不是整顆紅底；狀態用 `.pill` 的字與邊框表現
-- **Aurora red 不當文字色** ⚠️：`#BF616A` 疊在 polar1 只有 2.46:1、polar2 只有 2.11:1（WCAG AA 要 4.5:1），最需要被讀懂的錯誤訊息反而最難讀。危險與錯誤一律是 snow 文字＋紅色的邊框、左側 bar 或偏移塊（`.err`、`.btn.danger`、`.toast.err`）。其他 Aurora 色當字前也先算對比：green／yellow 疊在 polar1 夠（4.9／6.4:1），orange／purple 只有約 3.5:1，只適合大字或非文字標記
+- **任何 Nord 原色都不直接當文字色** ⚠️：舊版的 dim `#9AA0AD` 在 polar1 只有 3.84:1、frost1 在 polar2 只有 4.31:1、Aurora red 在 polar1 只有 2.46:1。字一律用上表的文字 token；`test_theme.py` 擋下 `color: var(--danger)`
+- **字不放在 frost3 或 Aurora 原色填色上** ⚠️：snow2 疊在 frost3 只有 3.50:1。主按鈕是 frost1 底配 polar0 字；選中的分頁是 polar2 底 + `--accent` 字 + 4px frost1 底線
+- **Aurora 只作語意點綴，不作大面積背景**：狀態用 `.pill` 的字（`*-ink`）與邊框（原色）表現；錯誤訊息 `.err` 是 `--danger-ink` 字＋4px 紅色左邊條
 - 不用純白背景、不用純白文字（最亮是 snow2）
-- **陰影一律是 Nord 色的實色塊（無模糊）**，不用 `rgba(0,0,0,…)` 灰色陰影；dialog 背後的遮罩也是半透明 polar0（`--scrim`）
+- **陰影一律是 Nord 色的實色塊（無模糊、不半透明）**，不用 `rgba(…)` 陰影；dialog 背後的遮罩 `--scrim` 是黑 55%，它調暗頁面而不是陰影，是唯一的黑色半透明
 - 同一個畫面最多兩個強調色同時出現（frost 系 + 一個 Aurora 語意色）
 
 ### 場景類別色
@@ -73,16 +81,16 @@ JS 需要顏色時也一樣：字串寫成 `var(--look-xiaobai)`、`var(--home)`
 
 ## Brutalism 結構
 
-- **偏移陰影**：`box-shadow: var(--offset) var(--offset) 0 var(--shadow)`（frost3 @ 50%）。按鈕用較小的 3px 實色偏移，按下時 `translate(2px, 2px)` 往陰影方向沉
+- **偏移陰影**：`box-shadow: var(--offset) var(--offset) 0 var(--shadow)`（frost3 實色，`--offset` 3px）。一般按鈕的陰影色同裝飾性結構邊框 `--line`（`--shadow-ghost`，即設計系統的 `offset-shadow-ghost`；陰影是裝飾，可按的辨識靠 `--line-control` 外框）、危險按鈕用紅；按下時元素位移 `--offset` 落進自己的陰影、陰影歸零（90ms）
 - **偏移會溢出元素外框** ⚠️：放面板的 grid 要留 ≥12px 的 gap，容器右下要留出 `--offset` 的 padding（`.wall`、`.detail`、`/demo` 的 section 都有），否則陰影被相鄰元素或捲動容器截掉
-- **2px 裸邊框**：面板、輸入框、按鈕、chip、分頁都是 2px `--line`；hover／focus 換成 `--accent`；選中的清單項目加 4px 左側 accent bar
-- **低圓角**：`--radius` 4px；裝置畫面裡的窗、pill 用 2px；不出現 ≥8px 的圓角
+- **2px 裸邊框**：面板是 2px `--line`；按鈕、chip、分頁群組與頁面自訂的按鈕（World 清單、Demo 日期）用 `--line-control`；輸入框左側是 4px frost1 accent bar，focus 換成 `--accent`；選中的清單項目加 4px 左側 accent bar
+- **直角**：`--radius` 0（Offbeat 的 Web 介面在所有 STRUCTURE 下都是直角，圓角 4px 只屬於行動 App）；只有裝置畫面裡模擬螢幕的窗與徽章保留 2px
 
 ## 字型
 
-- 內文與標題：Noto Sans TC（標題 900、按鈕 600）
-- 時鐘、時間、ID、狀態列、標籤：JetBrains Mono（`--font-mono`），數字一律 `tabular-nums`
-- 只從 Google Fonts 載入這兩個字族；舊版的 LXGW WenKai（楷體）與 IBM Plex Mono 已移除
+- 內文與標題：`--font-body`（system-ui、Segoe UI、Roboto 在前，Noto Sans TC 等 CJK 字型在後；標題 900、按鈕 700）
+- 時鐘、時間、ID、狀態列、標籤：`--font-mono`（JetBrains Mono 有裝就用，沒裝退到系統等寬），數字一律 `tabular-nums`
+- **不載入任何 webfont**：字族先列拉丁字型、後列 CJK，避免拉丁字母掉進 CJK 字型裡難看的比例字；帶字距的標籤（表頭、`h1 small`）字重不低於 700
 
 ## 只有深色
 

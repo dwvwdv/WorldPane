@@ -1,7 +1,4 @@
 <title>窗間 Demo</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
 <style>
 /*__OFFBEAT_CSS__*/
 /* Demo 專屬版面：一個裝置外框、每個角色一扇窗，下方是播放控制與 24 小時時間軸。
@@ -38,7 +35,7 @@ header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content:
 .clock .t { font-family: var(--font-mono); font-size: 2.2rem; font-weight: 700; color: var(--accent); font-variant-numeric: tabular-nums; letter-spacing: .02em; }
 .clock .d { color: var(--muted); }
 .days { display: flex; flex-wrap: wrap; gap: 6px; }
-.days button { border: 2px solid var(--line); background: var(--panel); color: var(--ink); border-radius: var(--radius); padding: 3px 10px; font: inherit; font-size: .88rem; cursor: pointer; }
+.days button { border: 2px solid var(--line-control); background: var(--panel); color: var(--ink); border-radius: var(--radius); padding: 3px 10px; font: inherit; font-size: .88rem; font-weight: 700; cursor: pointer; }
 .days button:hover { border-color: var(--accent); }
 .days button[aria-pressed="true"] { border-color: var(--accent); background: var(--panel-head); color: var(--accent); font-weight: 700; }
 .days button .wk { color: var(--muted); font-size: .78rem; margin-left: 4px; }

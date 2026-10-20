@@ -1,14 +1,13 @@
 /* Offbeat — lazyrhythm 的設計語言（Nord × Brutalism），WorldPane 網頁（/dashboard、/demo）共用。
    這個檔案是網頁顏色的唯一來源：Nord 色碼只寫在這裡，頁面只用下方的語意 token。
    伺服器把本檔內嵌到頁面 <style> 裡的 OFFBEAT_CSS 佔位註解（worldpane_server/theme.py）。
-   規範與理由見 docs/ui-conventions.md。 */
+   色值以 lazyrhythm 的 Offbeat 設計系統（tokens v1）為準；規範與理由見 docs/ui-conventions.md。 */
 :root {
   /* ── Nord 色票（只在本檔出現）──────────────────────────── */
   --nord-polar0: #2E3440; /* 主背景（永遠最深，不用純黑） */
   --nord-polar1: #3B4252; /* 卡片／面板 */
   --nord-polar2: #434C5E; /* 標題欄／hover */
-  --nord-polar3: #4C566A; /* 邊框／分隔線（勿作文字色，對比只有 2.3:1） */
-  --nord-dim: #9AA0AD;    /* 輔助文字（取代 polar3 作文字） */
+  --nord-polar3: #4C566A; /* 邊框／分隔線（勿作文字色，polar0 上只有 1.69:1） */
   --nord-snow0: #D8DEE9;  /* 主要文字 */
   --nord-snow1: #E5E9F0;  /* 標題 */
   --nord-snow2: #ECEFF4;  /* 最亮強調 */
@@ -22,33 +21,57 @@
   --nord-green: #A3BE8C;  /* Aurora：成功 */
   --nord-purple: #B48EAD; /* Aurora：特殊標記 */
 
+  /* 為了對比加出來的衍生值（tokens v1）：Nord 原色負責被看見，*-ink 負責被讀懂。
+     每個文字色在 polar0／polar1／polar2 三層上都 ≥ 4.5:1。 */
+  --nord-dim-ink: #B8BDC8;        /* 輔助文字 6.63／5.34／4.58（舊的 dim 灰在 polar1 只有 3.84） */
+  --nord-frost-ink: #93C6D4;      /* 強調文字 6.70／5.40／4.63（frost1 在 polar2 只有 4.31） */
+  --nord-red-ink-dark: #F4ABB2;   /* 危險文字 6.73／5.42／4.65 */
+  --nord-green-ink-dark: #B0CB98; /* 成功文字 7.04／5.67／4.87 */
+  --nord-orange-ink-dark: #F3AE95;/* 降級／警告文字 6.72／5.42／4.64 */
+  --nord-purple-ink-dark: #D9B2D3;/* 特殊標記文字 6.70／5.39／4.63 */
+  --nord-control-dark: #919BB1;   /* 控制項外框：polar0 4.48／polar1 3.61／polar2 3.09 */
+  --nord-red-deep: #A54049;       /* 危險按鈕底：snow2 字 5.31:1 */
+  --nord-red-hover: #8F3A42;      /* 危險按鈕 hover：snow2 字 6.39:1 */
+
   /* ── 語意 token（頁面只用這些）────────────────────────── */
   --bg: var(--nord-polar0);
   --panel: var(--nord-polar1);
   --panel-head: var(--nord-polar2);
   --field: var(--nord-polar0);       /* 面板裡的輸入框：比面板深一階才分得出來 */
-  --line: var(--nord-polar3);
+  --line: var(--nord-polar3);       /* 裝飾性結構邊框（卡片、分隔線） */
+  --line-control: var(--nord-control-dark); /* 按得到的東西的外框：按鈕、chip、checkbox */
   --ink: var(--nord-snow0);
   --ink-strong: var(--nord-snow1);
   --ink-bright: var(--nord-snow2);
-  --muted: var(--nord-dim);
-  --accent: var(--nord-frost1);
-  --primary: var(--nord-frost3);
+  --muted: var(--nord-dim-ink);
+  --accent: var(--nord-frost-ink);     /* 強調「文字」：連結、時鐘、選中的分頁 */
+  --accent-fill: var(--nord-frost1);   /* 主按鈕底、checkbox 勾選底 */
+  --accent-ink: var(--nord-polar0);    /* 疊在 accent-fill 上的字：6.24:1 */
   --primary-edge: var(--nord-frost0);
+  /* Aurora 原色只畫圓點、邊框、左邊條、偏移陰影；字用對應的 *-ink */
   --ok: var(--nord-green);
+  --ok-ink: var(--nord-green-ink-dark);
   --warn: var(--nord-orange);
+  --warn-ink: var(--nord-orange-ink-dark);
   --danger: var(--nord-red);
+  --danger-ink: var(--nord-red-ink-dark);
+  --danger-fill: var(--nord-red-deep);
+  --danger-fill-hover: var(--nord-red-hover);
   --info: var(--nord-frost2);
-  --notice: var(--nord-yellow);
+  --notice: var(--nord-yellow);        /* 黃在深色三層上本身就 ≥ 5.5:1，可直接當字 */
 
-  /* Brutalism 結構：偏移陰影（無模糊的色塊）、2px 裸邊框、低圓角 */
-  --offset: 4px;
-  --radius: 4px;
-  --shadow: rgb(94 129 172 / .5);       /* frost3 @ 50%：卡片、面板 */
-  --shadow-solid: var(--nord-frost2);   /* 主要按鈕 */
-  --shadow-ghost: var(--nord-polar2);   /* 一般按鈕 */
-  --shadow-danger: rgb(191 97 106 / .4);
-  --scrim: rgb(46 52 64 / .75);         /* dialog 背後的遮罩（polar0，不用黑） */
+  /* Brutalism 結構：無模糊的實色偏移陰影、2px 裸邊框、Web 一律直角。
+     工具介面 STRUCTURE 6 → 偏移 offset-sm 3px。 */
+  --offset: 3px;
+  --radius: 0;
+  --accent-bar: 4px;
+  --shadow: var(--nord-frost3);         /* 卡片、面板、主按鈕、dialog、toast */
+  --shadow-ghost: var(--nord-polar3);   /* 一般按鈕：陰影色同邊框 */
+  --shadow-danger: var(--nord-red);
+  --scrim: rgb(0 0 0 / .55);            /* dialog 背後的遮罩：調暗頁面而非陰影，是唯一的黑色半透明 */
+  --dur-fast: 90ms;
+  --dur: 150ms;
+  --ease: cubic-bezier(.2, 0, .2, 1);
 
   /* 場景類別：時間軸色條、圖例、裝置畫面的地板 */
   --home: var(--nord-orange);
@@ -81,8 +104,9 @@
   --look-5: var(--nord-green);
   --look-6: var(--nord-frost1);
 
-  --font-body: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", "Fira Code", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  /* 先列拉丁字型、後列 CJK：反過來的話拉丁字母會掉進 CJK 字型裡難看的比例字。不載入 webfont。 */
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans TC", "PingFang TC", "Hiragino Sans TC", "Microsoft JhengHei", sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", ui-monospace, SFMono-Regular, Menlo, Consolas, "Noto Sans Mono CJK TC", monospace;
   color-scheme: dark;
 }
 
@@ -90,12 +114,13 @@
 *, *::before, *::after { box-sizing: border-box; }
 [hidden] { display: none !important; }
 html, body { margin: 0; }
-body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 15px; line-height: 1.55; }
-::selection { background: var(--primary); color: var(--ink-bright); }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 15px; line-height: 1.65; }
+::selection { background: var(--accent-fill); color: var(--accent-ink); }
 a { color: var(--accent); }
 code { font-family: var(--font-mono); font-size: .86em; color: var(--accent); }
-h1 { font-size: 1.8rem; font-weight: 900; color: var(--ink-strong); letter-spacing: -.01em; margin: 0; text-wrap: balance; }
-h1 small { font-family: var(--font-mono); font-size: .72rem; font-weight: 500; letter-spacing: .12em; color: var(--muted); margin-left: .8em; }
+h1 { font-size: 1.75rem; font-weight: 900; color: var(--ink-strong); letter-spacing: -.5px; line-height: 1.25; margin: 0; text-wrap: balance; }
+/* 帶字距的標籤字重不低於 700，字距需要筆畫撐住 */
+h1 small { font-family: var(--font-mono); font-size: .72rem; font-weight: 700; letter-spacing: .12em; color: var(--muted); margin-left: .8em; }
 h2 { font-size: 1.05rem; font-weight: 700; color: var(--ink-strong); margin: 0; }
 h3 { font-size: .82rem; font-weight: 700; letter-spacing: .08em; color: var(--accent); margin: 0; }
 button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
@@ -105,61 +130,71 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
 .note { font-size: .84rem; color: var(--muted); margin: 0; max-width: 75ch; }
 .status { font-family: var(--font-mono); font-size: .76rem; color: var(--muted); }
 .mono { font-family: var(--font-mono); font-size: .8rem; font-variant-numeric: tabular-nums; }
-/* Aurora red on polar1 is only 2.46:1, so red is never text color: the message is snow, red is the bar. */
-.err { color: var(--ink-strong); border-left: 3px solid var(--danger); padding-left: 8px; }
+/* Aurora red 原色在 polar1 只有 2.46:1，不當字：錯誤訊息用 danger-ink，紅色原色畫左邊條。 */
+.err { color: var(--danger-ink); border-left: var(--accent-bar) solid var(--danger); padding-left: 8px; }
 label.lbl, .lbl { font-size: .82rem; font-weight: 500; color: var(--muted); }
 .row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
 .empty { color: var(--muted); text-align: center; padding: 40px 16px; border: 2px dashed var(--line); border-radius: var(--radius); }
 
 /* ── 分頁切換 ─────────────────────────────────────────── */
-.tabs { display: inline-flex; border: 2px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--panel); }
-.tabs button { border: 0; background: transparent; color: var(--muted); padding: 6px 16px; font: inherit; font-weight: 600; cursor: pointer; }
-.tabs button + button { border-left: 2px solid var(--line); }
-.tabs button:hover { color: var(--ink-strong); }
-.tabs button[aria-pressed="true"] { background: var(--primary); color: var(--ink-bright); }
+.tabs { display: inline-flex; border: 2px solid var(--line-control); border-radius: var(--radius); overflow: hidden; background: var(--panel); }
+.tabs button { border: 0; background: transparent; color: var(--muted); padding: 6px 16px; font: inherit; font-weight: 700; cursor: pointer; transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease); }
+.tabs button + button { border-left: 2px solid var(--line-control); }
+.tabs button:hover { background: var(--panel-head); color: var(--ink-strong); }
+/* 選中：sunken 底 + accent 字 + 4px 底線（字不放在 frost3 填色上，那只有 3.50:1） */
+.tabs button[aria-pressed="true"] { background: var(--panel-head); color: var(--accent); box-shadow: inset 0 calc(-1 * var(--accent-bar)) 0 var(--accent-fill); }
+.tabs button:focus-visible { outline-offset: -4px; }
 
-/* ── 按鈕：裸邊 + 偏移塊，按下時往陰影方向沉 ─────────────── */
-.btn { border: 2px solid var(--line); background: var(--panel); color: var(--ink); border-radius: var(--radius); padding: 4px 12px; font: inherit; font-size: .88rem; font-weight: 600; cursor: pointer; white-space: nowrap; box-shadow: 3px 3px 0 var(--shadow-ghost); transition: transform .08s, box-shadow .08s; }
-.btn:hover { border-color: var(--accent); }
-.btn:active:not(:disabled) { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--shadow-ghost); }
-.btn.primary { background: var(--primary); color: var(--ink-bright); border-color: var(--primary-edge); box-shadow: 3px 3px 0 var(--shadow-solid); letter-spacing: .04em; }
-.btn.primary:active:not(:disabled) { box-shadow: 1px 1px 0 var(--shadow-solid); }
-.btn.danger { border-color: var(--danger); box-shadow: 3px 3px 0 var(--shadow-danger); }
-.btn.danger:hover { border-color: var(--danger); background: var(--panel-head); }
+/* ── 按鈕：裸邊 + 偏移塊，按下時落進自己的陰影、陰影歸零 ─── */
+.btn { border: 2px solid var(--line-control); background: var(--panel); color: var(--ink); border-radius: var(--radius); padding: 4px 12px; font: inherit; font-size: .8125rem; font-weight: 700; cursor: pointer; white-space: nowrap; box-shadow: var(--offset) var(--offset) 0 var(--shadow-ghost); transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease), background-color var(--dur) var(--ease); }
+.btn:hover { background: var(--panel-head); color: var(--ink-bright); }
+/* 主按鈕：frost1 底 + polar0 字 6.24:1（frost3 底配 snow 字只有 3.50:1，不合格） */
+.btn.primary { background: var(--accent-fill); color: var(--accent-ink); border-color: var(--primary-edge); box-shadow: var(--offset) var(--offset) 0 var(--shadow); }
+.btn.primary:hover { background: var(--primary-edge); color: var(--accent-ink); }
+/* 危險按鈕：加深的紅底 + snow2 字 5.31:1，hover 往更深走（6.39:1），不回到 aurora_red */
+.btn.danger { background: var(--danger-fill); color: var(--ink-bright); border-color: var(--danger-fill); box-shadow: var(--offset) var(--offset) 0 var(--shadow-danger); }
+.btn.danger:hover { background: var(--danger-fill-hover); border-color: var(--danger-fill-hover); color: var(--ink-bright); }
 .btn.small { padding: 1px 8px; font-size: .8rem; box-shadow: 2px 2px 0 var(--shadow-ghost); }
+.btn.small.primary { box-shadow: 2px 2px 0 var(--shadow); }
 .btn.small.danger { box-shadow: 2px 2px 0 var(--shadow-danger); }
-.btn:disabled { opacity: .5; cursor: default; }
+/* 寫在尺寸與語氣之後：同樣的權重，後寫的才蓋得過 .btn.small.danger 的陰影 */
+.btn:active:not(:disabled) { transform: translate(var(--offset), var(--offset)); box-shadow: none; }
+.btn.small:active:not(:disabled) { transform: translate(2px, 2px); }
+.btn:disabled { opacity: .5; cursor: not-allowed; box-shadow: none; }
+@media (pointer: coarse) { .btn { min-height: 44px; } }
+@media (prefers-reduced-motion: reduce) { .btn:active:not(:disabled) { transform: none; } }
 
 /* ── 輸入 ─────────────────────────────────────────────── */
 input[type="text"], input[type="email"], input[type="number"], input[type="password"], input[type="date"], select, textarea {
   font: inherit; font-size: .9rem; padding: 4px 8px; border: 2px solid var(--line); border-radius: var(--radius);
   background: var(--field); color: var(--ink-strong); min-width: 0; }
 input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+input[type="text"], input[type="email"], input[type="number"], input[type="password"], input[type="date"] { border-left: var(--accent-bar) solid var(--accent-fill); }
 input::placeholder, textarea::placeholder { color: var(--muted); }
 textarea { font-family: var(--font-mono); font-size: .8rem; width: 100%; min-height: 180px; resize: vertical; }
-input[type="range"] { accent-color: var(--primary); }
-input[type="checkbox"], input[type="radio"] { accent-color: var(--primary); }
+input[type="range"] { accent-color: var(--accent-fill); }
+input[type="checkbox"], input[type="radio"] { accent-color: var(--accent-fill); }
 
 /* ── 標記 ─────────────────────────────────────────────── */
 .chips { display: flex; flex-wrap: wrap; gap: 6px; }
-.chip { border: 2px solid var(--line); background: var(--panel); color: var(--muted); border-radius: var(--radius); padding: 1px 10px; font: inherit; font-size: .82rem; cursor: pointer; }
+.chip { border: 2px solid var(--line-control); background: var(--panel); color: var(--muted); border-radius: var(--radius); padding: 1px 10px; font: inherit; font-size: .82rem; cursor: pointer; }
 .chip:hover { color: var(--ink-strong); }
 .chip[aria-pressed="true"] { border-color: var(--accent); background: var(--panel-head); color: var(--accent); font-weight: 700; }
-.pill { display: inline-block; padding: 0 8px; border-radius: 2px; font-size: .74rem; border: 1.5px solid var(--line); color: var(--muted); }
-.pill.on { color: var(--ok); border-color: currentColor; }
+.pill { display: inline-block; padding: 0 8px; border-radius: var(--radius); font-size: .74rem; border: 1px solid var(--line); color: var(--muted); }
+.pill.on { color: var(--ok-ink); border-color: var(--ok); }
 .legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: .8rem; color: var(--muted); }
 .legend i { display: inline-block; width: 10px; height: 10px; margin-right: 5px; vertical-align: -1px; }
 
 /* ── 表格 ─────────────────────────────────────────────── */
 table { border-collapse: collapse; width: 100%; font-size: .88rem; }
 th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: middle; }
-th { color: var(--muted); font-weight: 600; font-size: .76rem; letter-spacing: .06em; white-space: nowrap; border-bottom-width: 2px; }
+th { color: var(--muted); font-weight: 700; font-size: .76rem; letter-spacing: .06em; white-space: nowrap; border-bottom-width: 2px; }
 
 /* ── Dialog 與 toast ──────────────────────────────────── */
-dialog { border: 2px solid var(--line); border-top-color: var(--primary); border-radius: var(--radius); background: var(--panel); color: var(--ink); padding: 0; box-shadow: 6px 6px 0 var(--shadow); }
+dialog { border: 2px solid var(--line); border-top: var(--accent-bar) solid var(--accent-fill); border-radius: var(--radius); background: var(--panel); color: var(--ink); padding: 0; box-shadow: 6px 6px 0 var(--shadow); }
 dialog::backdrop { background: var(--scrim); }
-.toast { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); background: var(--panel-head); color: var(--ink-strong); border: 2px solid var(--primary); border-radius: var(--radius); box-shadow: var(--offset) var(--offset) 0 var(--shadow); padding: 8px 14px; font-size: .88rem; max-width: calc(100vw - 32px); z-index: 10; }
-.toast.err { border-color: var(--danger); box-shadow: var(--offset) var(--offset) 0 var(--shadow-danger); }
+.toast { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); background: var(--panel); color: var(--ink-strong); border: 2px solid var(--line); border-left: var(--accent-bar) solid var(--info); border-radius: var(--radius); box-shadow: var(--offset) var(--offset) 0 var(--shadow); padding: 8px 14px; font-size: .88rem; max-width: calc(100vw - 32px); z-index: 10; }
+.toast.err { border-left-color: var(--danger); color: var(--ink-strong); box-shadow: var(--offset) var(--offset) 0 var(--shadow-danger); }
 
 /* ── 裝置畫面：天空依時段、地板依場景類別 ───────────────── */
 .sky[data-sky="night"] { background: var(--sky-night); }

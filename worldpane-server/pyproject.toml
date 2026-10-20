@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "worldpane-server"
-version = "0.1.1"
+version = "0.1.2"
 description = "WorldPane (窗間) backend API: Display API, device pairing, world history."
 readme = "README.md"
 requires-python = ">=3.12"

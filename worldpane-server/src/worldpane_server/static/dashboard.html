@@ -5,9 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex">
 <title>窗間 Dashboard</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
 <style>
 /*__OFFBEAT_CSS__*/
 /* Dashboard 專屬版面。顏色只用 offbeat.css 的語意 token（docs/ui-conventions.md）。
@@ -39,9 +36,9 @@ header.top { display: flex; flex-wrap: wrap; align-items: center; justify-conten
 .tile-head .clock { font-family: var(--font-mono); font-size: 1rem; color: var(--accent); font-variant-numeric: tabular-nums; flex: none; }
 .tile-foot { display: flex; justify-content: space-between; align-items: center; gap: 8px; color: var(--muted); font-family: var(--font-mono); font-size: .72rem; padding: 0 4px; flex-wrap: wrap; }
 .tile-foot .acts { display: flex; gap: 6px; }
-.tile-foot button { background: transparent; border: 1.5px solid var(--line); color: var(--ink); border-radius: 2px; padding: 0 8px; font: inherit; cursor: pointer; }
+.tile-foot button { background: transparent; border: 2px solid var(--line-control); color: var(--ink); border-radius: var(--radius); padding: 0 8px; font: inherit; cursor: pointer; }
 .tile-foot button:hover { border-color: var(--accent); color: var(--accent); }
-.tile.stale .tile-head .clock { color: var(--warn); }
+.tile.stale .tile-head .clock { color: var(--warn-ink); }
 .screens { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; align-content: start; }
 .focus .screens { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
 

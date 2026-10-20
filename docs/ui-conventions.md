@@ -48,7 +48,7 @@ JS 需要顏色時也一樣：字串寫成 `var(--look-xiaobai)`、`var(--home)`
 | 標題欄、hover、選中的列與分頁 | `--panel-head` | polar2 `#434C5E` |
 | 面板裡的輸入框 | `--field` | polar0（比面板深一階才分得出來） |
 | 結構邊框、分隔線（裝飾性） | `--line` | polar3 `#4C566A` |
-| 控制項外框（按鈕、chip、checkbox） | `--line-control` | `#838EA6`（≥ 3:1） |
+| 控制項外框（按鈕、chip、checkbox） | `--line-control` | `#919BB1`（polar0／1／2 三層都 ≥ 3:1，按鈕放在標題欄上也看得清） |
 | 主要文字／標題／最亮 | `--ink`／`--ink-strong`／`--ink-bright` | snow0／snow1／snow2 |
 | 次要文字、placeholder、表頭 | `--muted` | dim-ink `#B8BDC8`（6.63／5.34／4.58） |
 | 強調文字、連結、時鐘、focus | `--accent` | frost-ink `#93C6D4`（6.70／5.40／4.63） |

@@ -30,7 +30,7 @@ OFFBEAT_DERIVED = {
     "B8BDC8",  # dim-ink
     "93C6D4",  # frost-ink
     "F4ABB2", "B0CB98", "F3AE95", "D9B2D3",  # red／green／orange／purple ink（深色）
-    "838EA6",  # control-dark
+    "919BB1",  # control-dark
     "A54049", "8F3A42",  # danger fill／hover
 }
 
